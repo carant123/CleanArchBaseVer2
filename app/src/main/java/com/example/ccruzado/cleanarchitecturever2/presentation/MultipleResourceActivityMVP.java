@@ -13,6 +13,7 @@ public interface MultipleResourceActivityMVP {
     interface View {
 
         void MuestraListaMultipleResource(MultipleResource multipleResource);
+        void Error(String value);
         void showLoading();
         void hideLoading();
 

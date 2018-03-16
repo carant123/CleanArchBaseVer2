@@ -1,4 +1,4 @@
-package com.example.ccruzado.cleanarchitecturever2.presentation.Base;
+package com.example.ccruzado.cleanarchitecturever2.presentation.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
