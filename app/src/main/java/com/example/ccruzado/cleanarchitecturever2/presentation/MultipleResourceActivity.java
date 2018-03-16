@@ -6,6 +6,8 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.ccruzado.cleanarchitecturever2.R;
@@ -15,6 +17,8 @@ import com.example.ccruzado.cleanarchitecturever2.presentation.adapter.MultipleR
 import com.example.ccruzado.cleanarchitecturever2.presentation.base.BaseActivity;
 
 import java.util.ArrayList;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 
@@ -28,10 +32,15 @@ public class MultipleResourceActivity extends BaseActivity implements MultipleRe
     @BindView(R.id.recycleViewList)
     RecyclerView recyclerView;
 
+    @BindView(R.id.progress_recycle)
+    ProgressBar progress_recycle;
+
+    @Inject
     MultipleResourceActivityMVP.Presenter presenter;
+
     private Context mContext;
     private MultipleResourceAdapter multipleResourceAdapter;
-    private ArrayList<MultipleResource> multipleResource;
+    private ArrayList<MultipleResource> multipleResource = new ArrayList<MultipleResource>();
     private static final String TAG = MultipleResourceActivity.class.getSimpleName();
 
 
@@ -43,6 +52,7 @@ public class MultipleResourceActivity extends BaseActivity implements MultipleRe
 
     @Override
     protected void init() {
+
         this.mContext = getApplicationContext();
         ((StartApplication) getApplication()).getComponent().inject(this);
 
@@ -73,12 +83,14 @@ public class MultipleResourceActivity extends BaseActivity implements MultipleRe
 
     @Override
     public void showLoading() {
-
+        progress_recycle.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.GONE);
     }
 
     @Override
     public void hideLoading() {
-
+        progress_recycle.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.VISIBLE);
     }
 
 
@@ -93,7 +105,7 @@ public class MultipleResourceActivity extends BaseActivity implements MultipleRe
     protected void onStop() {
         super.onStop();
         presenter.rxUnsubscribe();
-        multipleResource = null;
+        multipleResource.clear();
         multipleResourceAdapter.notifyDataSetChanged();
     }
 

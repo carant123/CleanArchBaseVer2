@@ -46,7 +46,7 @@ public class MultipleResourceAdapter extends RecyclerView.Adapter<MultipleResour
 
     @Override
     public int getItemCount() {
-        return 1;
+        return data.size();
     }
 
     public void clearItem () {

@@ -20,54 +20,55 @@ import io.reactivex.schedulers.Schedulers;
 public class MultipleResourcePresenter implements MultipleResourceActivityMVP.Presenter {
 
     private MultipleResourceActivityMVP.View view;
-    private Subscription subscription = null;
     private MultipleResourceActivityMVP.Model model;
 
-    CompositeDisposable compositeDisposable;
-    DisposableObserver observer;
+    private CompositeDisposable compositeDisposable;
+    private DisposableObserver disposableObserver;
+    private DisposableObserver<MultipleResource> disposableObserver_model;
+    private Observable<MultipleResource> observable;
 
     public MultipleResourcePresenter(MultipleResourceActivityMVP.Model model) {
         this.model = model;
         compositeDisposable = new CompositeDisposable();
+
     }
 
     @Override
     public void loadData() {
 
- /*       observer = model
-                .result()
+        view.showLoading();
+
+        observable = model.result()
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<MultipleResource>() {
+                .observeOn(AndroidSchedulers.mainThread());
 
-                    @Override
-                    public void onSubscribe(Disposable d) {
+        disposableObserver_model = new DisposableObserver<MultipleResource>() {
 
-                    }
+            @Override
+            public void onNext(MultipleResource multipleResource) {
+                if (view != null) {
+                    view.MuestraListaMultipleResource(multipleResource);
+                    view.hideLoading();
+                }
+            }
 
-                    @Override
-                    public void onNext(MultipleResource multipleResource) {
-                        if (view != null) {
-                            view.MuestraListaMultipleResource(multipleResource);
-                        }
-                    }
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+                if (view != null) {
+                    view.Error("No hay valores");
+                    view.hideLoading();
+                }
+            }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        e.printStackTrace();
-                        if (view != null) {
+            @Override
+            public void onComplete() {
 
-                        }
-                    }
+            }
+        };
 
-                    @Override
-                    public void onComplete() {
-
-                    }
-
-                });
-
-        compositeDisposable.add(observer);*/
+        disposableObserver = observable.subscribeWith(disposableObserver_model);
+        compositeDisposable.add(disposableObserver);
 
     }
 
