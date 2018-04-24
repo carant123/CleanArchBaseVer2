@@ -1,15 +1,14 @@
-package com.example.ccruzado.cleanarchitecturever2.presentation;
+package com.example.ccruzado.cleanarchitecturever2.presentation.presenter;
 
-import com.example.ccruzado.cleanarchitecturever2.data.model.MultipleResource;
-
-import org.reactivestreams.Subscription;
+import com.example.ccruzado.cleanarchitecturever2.data.model.MultipleResourceData;
+import com.example.ccruzado.cleanarchitecturever2.domain.model.MultipleResourceDomain;
+import com.example.ccruzado.cleanarchitecturever2.presentation.interfaces.MultipleResourceActivityMVP;
+import com.example.ccruzado.cleanarchitecturever2.presentation.model.mapper.MultipleResourceModelMapper;
 
 
 import io.reactivex.Observable;
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
@@ -22,16 +21,21 @@ public class MultipleResourcePresenter implements MultipleResourceActivityMVP.Pr
     private MultipleResourceActivityMVP.View view;
     private MultipleResourceActivityMVP.Model model;
 
+
     private CompositeDisposable compositeDisposable;
     private DisposableObserver disposableObserver;
-    private DisposableObserver<MultipleResource> disposableObserver_model;
-    private Observable<MultipleResource> observable;
+    private DisposableObserver<MultipleResourceDomain> disposableObserver_model;
+    private Observable<MultipleResourceDomain> observable;
+    private MultipleResourceModelMapper mapper;
 
-    public MultipleResourcePresenter(MultipleResourceActivityMVP.Model model) {
+    public MultipleResourcePresenter(MultipleResourceActivityMVP.Model model, MultipleResourceModelMapper mapper) {
         this.model = model;
+        this.mapper = mapper;
         compositeDisposable = new CompositeDisposable();
 
     }
+
+
 
     @Override
     public void loadData() {
@@ -42,12 +46,13 @@ public class MultipleResourcePresenter implements MultipleResourceActivityMVP.Pr
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
 
-        disposableObserver_model = new DisposableObserver<MultipleResource>() {
+        disposableObserver_model = new DisposableObserver<MultipleResourceDomain>() {
 
             @Override
-            public void onNext(MultipleResource multipleResource) {
+            public void onNext(MultipleResourceDomain multipleResource) {
                 if (view != null) {
-                    view.MuestraListaMultipleResource(multipleResource);
+
+                    view.MuestraListaMultipleResource(mapper.reverseMap(multipleResource));
                     view.hideLoading();
                 }
             }

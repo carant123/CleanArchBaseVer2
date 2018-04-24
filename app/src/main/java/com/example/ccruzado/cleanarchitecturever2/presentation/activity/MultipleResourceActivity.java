@@ -1,20 +1,20 @@
-package com.example.ccruzado.cleanarchitecturever2.presentation;
+package com.example.ccruzado.cleanarchitecturever2.presentation.activity;
 
 import android.content.Context;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.ccruzado.cleanarchitecturever2.R;
 import com.example.ccruzado.cleanarchitecturever2.StartApplication;
-import com.example.ccruzado.cleanarchitecturever2.data.model.MultipleResource;
+import com.example.ccruzado.cleanarchitecturever2.data.model.MultipleResourceData;
+import com.example.ccruzado.cleanarchitecturever2.presentation.interfaces.MultipleResourceActivityMVP;
 import com.example.ccruzado.cleanarchitecturever2.presentation.adapter.MultipleResourceAdapter;
 import com.example.ccruzado.cleanarchitecturever2.presentation.base.BaseActivity;
+import com.example.ccruzado.cleanarchitecturever2.presentation.model.MultipleResourceView;
 
 import java.util.ArrayList;
 
@@ -40,7 +40,7 @@ public class MultipleResourceActivity extends BaseActivity implements MultipleRe
 
     private Context mContext;
     private MultipleResourceAdapter multipleResourceAdapter;
-    private ArrayList<MultipleResource> multipleResource = new ArrayList<MultipleResource>();
+    private ArrayList<MultipleResourceView> multipleResource = new ArrayList<MultipleResourceView>();
     private static final String TAG = MultipleResourceActivity.class.getSimpleName();
 
 
@@ -69,7 +69,7 @@ public class MultipleResourceActivity extends BaseActivity implements MultipleRe
 
 
     @Override
-    public void MuestraListaMultipleResource(MultipleResource mrValue) {
+    public void MuestraListaMultipleResource(MultipleResourceView mrValue) {
 
         multipleResource.add(mrValue);
         multipleResourceAdapter.notifyItemInserted(multipleResource.size() - 1);

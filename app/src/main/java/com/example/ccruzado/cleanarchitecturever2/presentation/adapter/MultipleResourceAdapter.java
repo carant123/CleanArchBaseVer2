@@ -8,7 +8,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.ccruzado.cleanarchitecturever2.R;
-import com.example.ccruzado.cleanarchitecturever2.data.model.MultipleResource;
+import com.example.ccruzado.cleanarchitecturever2.data.model.MultipleResourceData;
+import com.example.ccruzado.cleanarchitecturever2.presentation.model.MultipleResourceView;
 
 import java.util.ArrayList;
 
@@ -19,15 +20,15 @@ import java.util.ArrayList;
 
 public class MultipleResourceAdapter extends RecyclerView.Adapter<MultipleResourceAdapter.AdapterViewHolder> {
 
-    private ArrayList<MultipleResource> data;
+    private ArrayList<MultipleResourceView> data;
     private Context context;
 
-    public MultipleResourceAdapter(ArrayList<MultipleResource> data, Context context) {
+    public MultipleResourceAdapter(ArrayList<MultipleResourceView> data, Context context) {
         this.data = data;
         this.context = context;
     }
 
-/*    public void setStrings(MultipleResource data) {
+/*    public void setStrings(MultipleResourceView data) {
         this.data = data;
         notifyDataSetChanged();
     }*/
@@ -65,7 +66,7 @@ public class MultipleResourceAdapter extends RecyclerView.Adapter<MultipleResour
             datavalue = itemView.findViewById(R.id.textViewData);
         }
 
-        public void binHolder(MultipleResource data) {
+        public void binHolder(MultipleResourceView data) {
             datavalue.setText("TotalPages: " + data.totalPages);
         }
     }

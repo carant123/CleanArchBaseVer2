@@ -16,7 +16,7 @@
 
         </activity>
 
-        <activity android:name=".presentation.MultipleResourceActivity">
+        <activity android:name=".presentation.activity.MultipleResourceActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -15,7 +15,7 @@ public class RepositoryModule {
 
 /*    @Provides
     @Named("Repository_MultipleResourceApiData")
-    Repository provideRepository() {
+    MultipleResourceIRepository provideRepository() {
         return new MultipleResourceApiData();
     }*/
 
